@@ -5,7 +5,7 @@
 -- =============================================================================
 
 -- 1. Create the row access policy
-CREATE OR REPLACE ROW ACCESS POLICY region_access AS (region_val VARCHAR)
+CREATE OR REPLACE ROW ACCESS POLICY region_access AS (region_val VARCHAR)  -- noqa: LT01
 RETURNS BOOLEAN ->
     IS_ROLE_IN_SESSION('DATA_ADMIN')
     OR EXISTS (
@@ -16,5 +16,5 @@ RETURNS BOOLEAN ->
     );
 
 -- 2. Apply the policy to a table (Example)
--- ALTER TABLE analytics.marts.fct_sales
+-- ALTER TABLE masking_analytics.marts.fct_sales
 -- ADD ROW ACCESS POLICY region_access ON (region);

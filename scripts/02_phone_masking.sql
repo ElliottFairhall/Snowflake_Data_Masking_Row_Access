@@ -5,7 +5,7 @@
 -- =============================================================================
 
 -- 1. Create the masking policy
-CREATE OR REPLACE MASKING POLICY phone_mask AS (val string)
+CREATE OR REPLACE MASKING POLICY phone_mask AS (val string)  -- noqa: LT01
 RETURNS STRING ->
     CASE
         WHEN IS_ROLE_IN_SESSION('PII_ADMIN') THEN val
@@ -13,5 +13,5 @@ RETURNS STRING ->
     END;
 
 -- 2. Apply the policy to a column (Example)
--- ALTER TABLE analytics.marts.dim_customers
+-- ALTER TABLE masking_analytics.marts.dim_customers
 -- MODIFY COLUMN phone_number SET MASKING POLICY phone_mask;

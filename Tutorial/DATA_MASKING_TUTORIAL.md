@@ -61,7 +61,7 @@ RETURNS STRING ->
     END;
 
 -- Apply the policy to a column
-ALTER TABLE analytics.marts.dim_customers
+ALTER TABLE masking_analytics.marts.dim_customers
 MODIFY COLUMN email SET MASKING POLICY email_mask;
 ```
 
@@ -74,7 +74,7 @@ RETURNS STRING ->
         ELSE CONCAT('***-***-', RIGHT(val, 4))
     END;
 
-ALTER TABLE analytics.marts.dim_customers
+ALTER TABLE masking_analytics.marts.dim_customers
 MODIFY COLUMN phone_number SET MASKING POLICY phone_mask;
 ```
 
@@ -118,7 +118,7 @@ RETURNS BOOLEAN ->
     );
 
 -- Apply the policy to a table
-ALTER TABLE analytics.marts.fct_sales
+ALTER TABLE masking_analytics.marts.fct_sales
 ADD ROW ACCESS POLICY region_access ON (region);
 ```
 
@@ -159,18 +159,18 @@ applying policies table-by-table.
 
 ```sql
 -- Create a tag for PII classification
-CREATE OR REPLACE TAG security.tags.pii_type
+CREATE OR REPLACE TAG masking_security.tags.pii_type
     ALLOWED_VALUES 'EMAIL', 'PHONE', 'NAME', 'ADDRESS', 'NI_NUMBER';
 
 -- Assign the tag to columns
-ALTER TABLE analytics.marts.dim_customers
-MODIFY COLUMN email SET TAG security.tags.pii_type = 'EMAIL';
+ALTER TABLE masking_analytics.marts.dim_customers
+MODIFY COLUMN email SET TAG masking_security.tags.pii_type = 'EMAIL';
 
-ALTER TABLE analytics.marts.dim_customers
-MODIFY COLUMN phone_number SET TAG security.tags.pii_type = 'PHONE';
+ALTER TABLE masking_analytics.marts.dim_customers
+MODIFY COLUMN phone_number SET TAG masking_security.tags.pii_type = 'PHONE';
 
 -- Create tag-based masking policy
-ALTER TAG security.tags.pii_type
+ALTER TAG masking_security.tags.pii_type
 SET MASKING POLICY email_mask;
 ```
 
@@ -205,7 +205,7 @@ LIMIT 20;
 -- View tag references
 SELECT *
 FROM TABLE(INFORMATION_SCHEMA.TAG_REFERENCES(
-    'analytics.marts.dim_customers.email',
+    'masking_analytics.marts.dim_customers.email',
     'COLUMN'
 ));
 ```

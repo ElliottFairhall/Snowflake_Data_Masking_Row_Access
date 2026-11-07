@@ -6,7 +6,7 @@
 
 -- 1. View all policies
 SHOW MASKING POLICIES;
-SHOW ROW ACCESS POLICIES;
+SHOW ROW ACCESS POLICIES;  -- noqa: PRS
 
 -- 2. Check which columns have a specific masking policy applied
 SELECT *
@@ -30,6 +30,6 @@ LIMIT 20;
 -- 4. View tag references
 -- SELECT *
 -- FROM TABLE(INFORMATION_SCHEMA.TAG_REFERENCES(
---     'analytics.marts.dim_customers.email',
+--     'masking_analytics.marts.dim_customers.email',
 --     'COLUMN'
 -- ));
